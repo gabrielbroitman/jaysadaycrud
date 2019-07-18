@@ -1,22 +1,35 @@
 package com.weedem.jsaday.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Droga {
 
-	private Long id;
-
-	private String nome;
-
-	private String descricao;
-
-	private Categoria categoria;
-	
 	@Id
 	@GeneratedValue
+	@Column(name ="idDroga")
+	private Long id;
+
+	@Column(name = "nomeDroga")
+	private String nome;
+	
+	@Column
+	private String descricao;
+
+	@OneToMany(mappedBy = "categoria", cascade = { CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval =true)
+	private List<AssociacaoCategoriaDroga> categorias;
+	
+	
+	private byte[] imagem;
+	
+
 	public Long getId() {
 		return id;
 	}
@@ -49,14 +62,6 @@ public class Droga {
 		this.imagem = imagem;
 	}
 
-	public Categoria getCategoria() {
-		return categoria;
-	}
 
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
-	}
-
-	private byte[] imagem;
 
 }
